@@ -830,6 +830,159 @@ MCC (Matthew's Correlation Coefficient) measures the performance of a classifier
 \end{frame}
 
 
+\begin{frame}{CsgA alignment}
+
+<<echo = FALSE,message=FALSE,fig.align='center',fig.height=4,warning=FALSE>>=
+library(alignfigR)
+library(ggplot2)
+library(dplyr)
+library(reshape2)
+library(xtable)
+
+my_data <- read_alignment("csgA.aln")
+
+aa_cols <- c("G" = "#91bfdb", 
+             "K" = "#4575b4", "P" = "#4575b4", "R" = "#4575b4",
+             "I" = "#d73027", "L" = "#d73027", "V" = "#d73027",
+             "F" = "#fc8d59", "W" = "#fc8d59", "Y" = "#fc8d59", 
+             "A" = "#e0f3f8", "C" = "#e0f3f8", "H" = "#e0f3f8", "M" = "#e0f3f8",
+             "D" = "#fee090", "E" = "#fee090", "N" = "#fee090", "Q" = "#fee090", "S" = "#fee090", "T" = "#fee090",
+             "-" = "white") 
+
+plot_dat <- lapply(names(my_data), function(i) 
+  data.frame(species = i, pos = 1L:length(my_data[[i]]), aa = my_data[[i]])) %>% 
+  do.call(rbind, .) %>% 
+  mutate(aa = factor(aa, levels = c(toupper(biogram:::return_elements("prot")), "-")),
+         pos_disc = cut(pos, quantile(pos, probs = c(0, 0.14, 0.28, 0.42, 0.56, 0.7, 0.84, 1)), include.lowest = TRUE),
+         pos_disc = paste0("Alignment region: ", pos_disc),
+         pos_disc = factor(pos_disc, levels = unique(pos_disc)),
+         prone = FALSE,
+         species = factor(species, labels = c("S. oneidensis", "E. coli", "S. typhimurium", 
+                                              "C. koseri"))) %>% 
+  mutate(species = factor(species, levels = c("S. oneidensis", 
+                                              "C. koseri", "S. typhimurium", "E. coli")))
+
+plot_dat[plot_dat[["species"]] == "E. coli", "prone"] <- lapply(list(R1 = 43L:65, 
+                                                                              #R2 = 66L:87,
+                                                                              R3 = 88L:110,
+                                                                              #R4 = 111L:132,
+                                                                              R5 = 133L:151),
+                                                                         function(i) {
+                                                                           cumsum(filter(plot_dat, species == "E. coli")[["aa"]] != "-") %in% i
+                                                                         }
+) %>% do.call(rbind, .) %>% 
+  colSums %>% 
+  as.logical()
+
+plot_dat <- mutate(plot_dat, 
+                   prone = ifelse(aa == "-", FALSE, prone),
+                   aa_prone = ifelse(prone & species == "E. coli", as.character(aa), ""),
+                   aa_nonprone = ifelse(!prone, as.character(aa), ""),
+                   pos_prone = ifelse(prone, pos, NA),
+                   enc = biogram::degenerate(tolower(as.character(aa)), AmyloGram::AmyloGram_model[["enc"]])) #%>% 
+  #filter(species %in% c("S. oneidensis", "E. coli"))
+
+plot_dat %>% 
+  ggplot(aes(x = pos, y = species, fill = aa, shape = prone, label = aa_nonprone)) +
+  geom_tile(color = "white") +
+  geom_tile(aes(x = pos_prone), color = "black", size = 0.4) +
+  geom_text(size = 2.1, family = "Courier", fontface="bold") +
+  geom_text(aes(label = aa_prone), size = 2.7, family = "Courier", fontface="bold.italic", color = "black") +
+  #geom_point(size = 0.7) +
+  scale_shape_manual(values = c(NA, 16), guide = FALSE) +
+  scale_fill_manual("Amino acids", values = aa_cols, drop = FALSE, guide = FALSE) +
+  #guides(fill = guide_legend(nrow = 2, byrow = TRUE, override.aes = list(shape = NA))) + 
+  scale_y_discrete("") +
+  scale_x_continuous("Position", expand = c(0, 0)) +
+  facet_wrap(~ pos_disc, ncol = 1, scales = "free_x") +
+  theme_bw(base_size = 8) +
+  theme(legend.position = "bottom",
+        legend.key.size = unit(0.7, "lines"),
+        strip.background = element_blank(),
+        strip.text.x = element_blank())
+
+@
+
+\end{frame}
+
+\begin{frame}{CsgA alignment}
+
+<<echo = FALSE,message=FALSE,fig.align='center',fig.height=3.5,warning=FALSE>>=
+library(alignfigR)
+library(ggplot2)
+library(dplyr)
+library(reshape2)
+library(xtable)
+
+my_data <- read_alignment("csgA.aln")
+
+aa_cols <- c("G" = "#91bfdb", 
+             "K" = "#4575b4", "P" = "#4575b4", "R" = "#4575b4",
+             "I" = "#d73027", "L" = "#d73027", "V" = "#d73027",
+             "F" = "#fc8d59", "W" = "#fc8d59", "Y" = "#fc8d59", 
+             "A" = "#e0f3f8", "C" = "#e0f3f8", "H" = "#e0f3f8", "M" = "#e0f3f8",
+             "D" = "#fee090", "E" = "#fee090", "N" = "#fee090", "Q" = "#fee090", "S" = "#fee090", "T" = "#fee090",
+             "-" = "white") 
+
+plot_dat <- lapply(names(my_data), function(i) 
+  data.frame(species = i, pos = 1L:length(my_data[[i]]), aa = my_data[[i]])) %>% 
+  do.call(rbind, .) %>% 
+  mutate(aa = factor(aa, levels = c(toupper(biogram:::return_elements("prot")), "-")),
+         pos_disc = cut(pos, quantile(pos, probs = c(0, 0.14, 0.28, 0.42, 0.56, 0.7, 0.84, 1)), include.lowest = TRUE),
+         pos_disc = paste0("Alignment region: ", pos_disc),
+         pos_disc = factor(pos_disc, levels = unique(pos_disc)),
+         prone = FALSE,
+         species = factor(species, labels = c("S. oneidensis", "E. coli", "S. typhimurium", 
+                                              "C. koseri"))) %>% 
+  mutate(species = factor(species, levels = c("S. oneidensis", 
+                                              "C. koseri", "S. typhimurium", "E. coli")))
+
+plot_dat[plot_dat[["species"]] == "E. coli", "prone"] <- lapply(list(R1 = 43L:65, 
+                                                                              #R2 = 66L:87,
+                                                                              R3 = 88L:110,
+                                                                              #R4 = 111L:132,
+                                                                              R5 = 133L:151),
+                                                                         function(i) {
+                                                                           cumsum(filter(plot_dat, species == "E. coli")[["aa"]] != "-") %in% i
+                                                                         }
+) %>% do.call(rbind, .) %>% 
+  colSums %>% 
+  as.logical()
+
+plot_dat <- mutate(plot_dat, 
+                   prone = ifelse(aa == "-", FALSE, prone),
+                   aa_prone = ifelse(prone & species == "E. coli", as.character(aa), ""),
+                   aa_nonprone = ifelse(!prone, as.character(aa), ""),
+                   pos_prone = ifelse(prone, pos, NA),
+                   enc = biogram::degenerate(tolower(as.character(aa)), AmyloGram::AmyloGram_model[["enc"]])) %>% 
+  filter(species %in% c("S. oneidensis", "E. coli"))
+
+plot_dat %>% 
+  ggplot(aes(x = pos, y = species, fill = aa, shape = prone, label = aa_nonprone)) +
+  geom_tile(color = "white") +
+  geom_tile(aes(x = pos_prone), color = "black", size = 0.4) +
+  geom_text(size = 2.1, family = "Courier", fontface="bold") +
+  geom_text(aes(label = aa_prone), size = 2.7, family = "Courier", fontface="bold.italic", color = "black") +
+  #geom_point(size = 0.7) +
+  scale_shape_manual(values = c(NA, 16), guide = FALSE) +
+  scale_fill_manual("Amino acids", values = aa_cols, drop = FALSE, guide = FALSE) +
+  #guides(fill = guide_legend(nrow = 2, byrow = TRUE, override.aes = list(shape = NA))) + 
+  scale_y_discrete("") +
+  scale_x_continuous("Position", expand = c(0, 0)) +
+  facet_wrap(~ pos_disc, ncol = 1, scales = "free_x") +
+  theme_bw(base_size = 8) +
+  theme(legend.position = "bottom",
+        legend.key.size = unit(0.7, "lines"),
+        strip.background = element_blank(),
+        strip.text.x = element_blank())
+
+@
+Full alphabet PID: 40\% (aggregation-prone regions) and 34\% (other parts of the protein). 
+
+Simplified alphabet PID: 73\% (aggregation-prone regions) and 50\% (other parts of the protein).
+\end{frame}
+
+
 \section{Perspectives and summary}
 
 \begin{frame}{Perspectives}
