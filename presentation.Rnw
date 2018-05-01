@@ -932,7 +932,7 @@ Funding:
 \begin{enumerate}
 \item Created AmyloGram, a new, accurate predictor of amyloids~\citep{BurdukiewiczAmyloidogenicmotifsrevealed2017}.
 \item Found a set of amino acid motifs associated with the amyloidogenic properties or the lack of them.
-\item Found a simplified alphabet suitable for prediction of amyloid proteins.
+\item Found a simplified alphabet for prediction of amyloid proteins.
 \end{enumerate}
 
 \textbf{AmyloGram}: \url{http://www.smorfland.uni.wroc.pl/shiny/AmyloGram/}.

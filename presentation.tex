@@ -177,45 +177,29 @@ n-grams (k-tuples, k-mers):
 \end{itemize}
 
 
-\begin{kframe}
+% latex table generated in R 3.4.4 by xtable 1.8-2 package
+% Tue May  1 08:46:19 2018
+\begin{table}[ht]
+\centering
+\begin{tabular}{rlllll}
+  \hline
+ & P1 & P2 & P3 & P4 & P5 \\ 
+  \hline
+S1 & M & R & K & L & Y \\ 
+   \hline
+\end{tabular}
+\end{table}
 
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in file(con, "{}r"{}): cannot open the connection}}
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in lapply(seqs, function(i) i[1L:27]): object 'seqs' not found}}
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in colnames(seq\_df)[-1] <- paste0("{}P"{}, 1L:27): object 'seq\_df' not found}}
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in melt(seq\_df, id.vars = "{}name"{}, value.name = "{}aa"{}, variable.name = "{}pos"{}): object 'seq\_df' not found}}
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in as.matrix(seq\_df[, 2L:10]): object 'seq\_df' not found}}
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in ncol(sample\_seq): object 'sample\_seq' not found}}
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in rownames(sample\_seq) <- paste0("{}S"{}, 1L:4): object 'sample\_seq' not found}}
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in data.frame(sample\_seq): object 'sample\_seq' not found}}
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in xtable(sample\_seq\_dat[1, 1L:5], include.rownames = FALSE, booktabs = TRUE): object 'sample\_seq\_dat' not found}}\end{kframe}
 
 
 2-grams:
-\begin{kframe}
-
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in seq2ngrams(sample\_seq[1, 1L:5, drop = FALSE], 2, aa\_v, d = 0): object 'sample\_seq' not found}}\end{kframe}
+MR, RK, KL, LY
 
 2-grams (gap 1):
-\begin{kframe}
-
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in seq2ngrams(sample\_seq[1, 1L:5, drop = FALSE], 2, aa\_v, d = 1): object 'sample\_seq' not found}}\end{kframe}
+M -- K, R -- L, K -- Y
 
 3-grams:
-\begin{kframe}
-
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in seq2ngrams(sample\_seq[1, 1L:5, drop = FALSE], 3, aa\_v, d = 0): object 'sample\_seq' not found}}\end{kframe}
+MRK, RKL, KLY
 \end{frame}  
 
 
@@ -242,14 +226,9 @@ $N$: number of permutations.
 
 \begin{frame}{QuiPT}  
 
-\begin{kframe}
 
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-6-1} 
 
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in readChar(con, 5L, useBytes = TRUE): cannot open the connection}}
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in lapply(times, function(i) t(sapply(i, function(j) \{: object 'times' not found}}
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in ggplot(times\_dat, aes(x = size, y = value, color = variable)): object 'times\_dat' not found}}\end{kframe}
 
 QuiPT (available as a part of the \textbf{biogram} R package) is faster than classical permutation tests and returns exact p-values.
 \end{frame}
@@ -567,16 +546,14 @@ Is the best-performing simplified amino alphabet associated with amyloidogenicit
 
 \begin{frame}{Similarity index}
 \begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-17-1} 
+
+}
 
 
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in file(file, "{}rt"{}): cannot open the connection}}
 
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in levels(si\_dat[["{}et"{}]]) <- c("{}Best-performing simplified alphabet"{}, : object 'si\_dat' not found}}
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in ggplot(si\_dat, aes(x = si, y = AUC\_mean)): object 'si\_dat' not found}}
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in print(simil\_plot): object 'simil\_plot' not found}}\end{kframe}
 \end{knitrout}
 Similarity index~\citep{stephenson_unearthing_2013} measures the similarity between two simplified alphabets (1 - identical, 0 - totally dissimilar).
 \end{frame}
@@ -585,20 +562,28 @@ Similarity index~\citep{stephenson_unearthing_2013} measures the similarity betw
 
 \begin{frame}{Similarity index}
 \begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-18-1} 
+
+}
 
 
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in print(simil\_plot): object 'simil\_plot' not found}}\end{kframe}
+
 \end{knitrout}
 The color of a square is proportional to the number of simplified alphabets in its area.
 \end{frame}
 
 \begin{frame}{Similarity index}
 \begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-19-1} 
+
+}
 
 
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in print(simil\_plot): object 'simil\_plot' not found}}\end{kframe}
+
 \end{knitrout}
 The correlation between mean AUC and similarity index is significant ($\textrm{p-value} \leq 2.2^{-16}$; $\rho = 0.51$).
 \end{frame}
