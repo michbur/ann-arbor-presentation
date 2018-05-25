@@ -16,7 +16,7 @@
 \definecolor{firebrick1}{RGB}{255, 48, 48}
 \definecolor{darkorange}{RGB}{255, 140, 0}
 
-\title{Predicting properties of biological sequences using n-gram analysis}
+\title{Prediction of amyloid proteins basd on the n-gram analysis}
 \date{}
 \author{Michał Burdukiewicz}
 \institute{Department of Genomics, University of Wrocław}
@@ -33,7 +33,7 @@ library(biogram)
 library(seqinr)
 library(VennDiagram)
   
-source("script.R")  
+#source("script.R")  
 
 print_bt <- function(x) {
   rws <- 0L:(nrow(x) - 1)
